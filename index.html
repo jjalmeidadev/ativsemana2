@@ -1,0 +1,131 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <title>Exercício do Pássaro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;  }
+    </style>
+</head>
+<body>
+
+<script>
+//Variável responsável pela formatação do documento phaser, de maneira a comportar o script phaser e as dimensões da página em que atuará.//
+var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+var passarinho
+
+
+
+//Função responsável pelo carregamento dos documentos a serem utilizados.//
+    function preload() {
+        this.load.image('bg', 'assets/bg_space.png');
+        this.load.spritesheet('bird', 'assets/bird-red.png', {frameWidth: 75, frameHeight: 75});
+    }
+//Função responsável por aplicar visualmente estes documentos na página em si.//
+    function create() {
+        this.add.image(400, 300, 'bg').setScale(1.2);
+        passarinho = this.add.sprite(100, 300, 'bird').setScale(1.3);
+
+        this.anims.create({
+            key:'fly',
+            frames: this.anims.generateFrameNumbers('bird', {start: 0, end: 7}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        passarinho.anims.play('fly', true);
+    }
+//Função responsável pela constante atualização das ações a serem realizadas pelo "jogador", de maneira a trazer estes comandos instantaneamente para a página.//
+    function update() {
+
+//Movimento no eixo x
+
+
+
+//Condicional que abrange o caso da posição do passarinho no eixo x é igual à 100, desencadeando a ação .ida e, no momento, não ativando sua versão espelhada.//
+if (passarinho.x === 100){
+    passarinho.setFlip(false, false);
+    passarinho.ida = true;
+}
+
+//Condição que, caso a posição do passarinho no eixo x for menor à 700 e a ação .ida for verdadeira, ativa seu movimento na adição constante de um avanço de 5.//
+if (passarinho.x < 700 && passarinho.ida === true) {
+    console.log('A ação passarinho.ida é ativa enquanto a distância do passarinho no eixo X for menor que 700, sendo constantemente aumentada por 5.')
+    passarinho.x += 5;
+}
+
+//Condição em que, quando a posição do passarinho no eixo x for igual à 700, ocorre o espelhamento da figura do pássaro no eixo x e estabelece a ação .ida como falsa.//
+if (passarinho.x === 700){
+    passarinho.setFlip(true, false);
+    passarinho.ida = false;
+}
+
+//A condição que estabelece, a partir do momento em que a posição do eixo x do passarinho for maior que 100 e a ação .ida for falsa, o retrocesso constante por 5 até sua posição inicial.//
+if(passarinho.x > 100 && passarinho.ida === false) {
+   console.log('Caso a posição do passarinho seja maior em relação à inicial, ao mesmo tempo que a ação .ida seja falsa, o passarinho irá voltar até sua posição inicial, gerando um loop.')
+   passarinho.x -= 5;
+}
+
+
+
+//Movimento no eixo y simulatâneamente ao no x:
+
+
+
+if (passarinho.y === 300){
+    passarinho.idacima = true;
+}
+
+if (passarinho.y < 500 && passarinho.idacima === true) {
+    passarinho.y += 5;
+}
+
+if (passarinho.y === 500){
+    passarinho.idacima = false;
+}
+
+
+if(passarinho.y > 300 && passarinho.idacima === false) {
+   passarinho.y -= 5;
+}
+
+i = 1
+
+//Utilização do while para inverter o passarinho verticalmente a partir de uma posição específica.//
+
+while(passarinho.x > 400 && passarinho.y< 500){
+    passarinho.setFlip(false, true);
+    break
+}
+
+
+
+
+    }
+
+</script>
+
+</body>
+</html>
